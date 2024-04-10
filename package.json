@@ -11,10 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/config": "^3.3.4",
     "@types/node": "^20.12.7",
     "typescript": "^5.4.4"
   },
   "dependencies": {
+    "config": "^3.3.11",
     "js-yaml": "^4.1.0",
     "node-fetch": "^3.3.2"
   }

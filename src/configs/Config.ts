@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { load } from "js-yaml";
 import { GamePlatform } from "../platforms/GamePlatform.js";
-import { Notifier } from "../notificators/Notifier.js";
+import { Notifier } from "../notifiers/Notifier.js";
 import {
   GOGPlatformFactory,
   PlatformFactory,
@@ -9,66 +9,41 @@ import {
 } from "./PlatformFactory.js";
 import { NotifierFactory } from "./NotifierFactory.js";
 import { GOGSettings, SteamSettings } from "./Settings.js";
+import { AppConfig } from "./types/types.js";
 
-type ChannelSettings = {
-  Ntfy: {
-    topic: string;
-    token: string;
-  };
-  // Add more channels as necessary
-};
-
-type PlatformSettings = {
-  Steam?: SteamSettings;
-  GOG?: GOGSettings;
-  // Add more platforms as necessary
-};
-
-// Define the complete configuration structure
-type AppConfig = {
-  mainConfiguration: MainConfiguration;
-  settings: {
-    channelSettings: ChannelSettings;
-    platformSettings: PlatformSettings;
-  };
-};
-
-type MainConfiguration = {
-  platforms: string[];
-  notificationChannel: string;
-};
-
-export class Config {
-  private static instance: Config;
+export class ConfigManager {
+  private static instance: ConfigManager;
   private config: AppConfig; // Use the AppConfig type
 
   private platforms: GamePlatform[] = [];
   private platformFactoryRegistry: { [key: string]: PlatformFactory } = {};
 
-  private notifier: Notifier;
+  private notifiers: Notifier[] = [];
   private notifierFactoryRegistry: { [key: string]: NotifierFactory } = {};
 
   protected constructor() {
     this.config = this.loadConfig();
 
-    this.registerPlatformFactory("steam", new SteamPlatformFactory());
-    this.registerPlatformFactory("gog", new GOGPlatformFactory());
+    this.registerPlatformFactory("Steam", new SteamPlatformFactory());
+    this.registerPlatformFactory("Gog", new GOGPlatformFactory());
 
     // Now initialize platforms based on the configuration
     this.initializePlatforms();
 
-    this.registerNotifierFactory("ntfy", new NotifierFactory());
+    this.registerNotifierFactory("Ntfy", new NotifierFactory());
+    this.initalizeNotifier();
   }
-  public static getInstance(): Config {
-    if (!Config.instance) {
-      Config.instance = new Config();
+
+  public static getInstance(): ConfigManager {
+    if (!ConfigManager.instance) {
+      ConfigManager.instance = new ConfigManager();
     }
-    return Config.instance;
+    return ConfigManager.instance;
   }
 
   private loadConfig(): AppConfig {
     try {
-      const configFile = readFileSync("resources/config.yaml", "utf8");
+      const configFile = readFileSync("config/default.yaml", "utf8");
       const loadedConfig = load(configFile);
       if (typeof loadedConfig === "object" && loadedConfig !== null) {
         return loadedConfig as AppConfig;
@@ -94,7 +69,6 @@ export class Config {
   ): void {
     this.notifierFactoryRegistry[notifierName] = factory;
   }
-
   private initializePlatforms(): void {
     this.config.mainConfiguration.platforms.forEach((platformName: string) => {
       const factory = this.platformFactoryRegistry[platformName];
@@ -110,5 +84,29 @@ export class Config {
         console.warn(`Factory missing for platform: ${platformName}`);
       }
     });
+  }
+
+  private initalizeNotifier(): void {
+    const notifierName = this.config.mainConfiguration.notificationChannel;
+    const factory = this.notifierFactoryRegistry[notifierName];
+    if (factory) {
+      const settings = this.config.settings.channelSettings[notifierName];
+      if (settings) {
+        const notififier = factory.create(settings);
+        this.notifiers.push(notififier);
+      } else {
+        console.warn(`Settings missing for notifier: ${notifierName}`);
+      }
+    } else {
+      console.warn(`Factory missing for notifier: ${notifierName}`);
+    }
+  }
+
+  public getPlatforms(): GamePlatform[] {
+    return this.platforms;
+  }
+
+  public getNotifiers(): Notifier[] {
+    return this.notifiers;
   }
 }

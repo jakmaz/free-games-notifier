@@ -40,8 +40,6 @@ export class SteamPlatform implements GamePlatform {
       .filter((type) => typesMap[type]) // Ensure only supported types are included
       .map((type) => typesMap[type]);
 
-    console.log(typeQueryValues.length);
-
     // If no types were specified or valid, return the base URL
     if (typeQueryValues.length === 0) {
       return baseSearchUrl; // No type filtering

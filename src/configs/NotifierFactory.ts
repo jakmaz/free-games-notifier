@@ -1,5 +1,5 @@
-import { Notifier } from "../notificators/Notifier.js";
-import { NtfyChannel } from "../notificators/NtfyChannel.js";
+import { Notifier } from "../notifiers/Notifier.js";
+import { NtfyChannel } from "../notifiers/NtfyChannel.js";
 import { NtfySettings } from "./Settings.js";
 
 export interface NotifierFactory {

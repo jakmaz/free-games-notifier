@@ -1,13 +1,16 @@
-import { Notifier } from "./notificators/Notifier.js";
+import { ConfigManager as ConfigManager } from "./configs/Config.js";
+import { Notifier } from "./notifiers/Notifier.js";
 import { GamePlatform } from "./platforms/GamePlatform.js";
 
 export class Manager {
   private notifiers: Notifier[];
   private platforms: GamePlatform[];
+  private config: ConfigManager;
 
-  public constructor(notifiers: Notifier[], platforms: GamePlatform[]) {
-    this.notifiers = notifiers;
-    this.platforms = platforms;
+  public constructor() {
+    this.config = ConfigManager.getInstance();
+    this.notifiers = this.config.getNotifiers();
+    this.platforms = this.config.getPlatforms();
   }
 
   public async fetchAndNotify(): Promise<void> {
