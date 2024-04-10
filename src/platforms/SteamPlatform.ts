@@ -1,3 +1,5 @@
+import fetch from "node-fetch";
+import { JSDOM } from "jsdom";
 import { SteamSettings } from "../configs/Settings.js";
 import { Game } from "../games/Game.js";
 import { GamePlatform } from "./GamePlatform.js";
@@ -11,16 +13,35 @@ export class SteamPlatform implements GamePlatform {
 
   async fetchFreeGames(): Promise<Game[]> {
     const searchUrl = this.buildSearchUrl();
-
     console.log(`Fetching free games from: ${searchUrl}`);
 
-    // Mocked response
-    return [new Game("Free Game 1", "http://example.com/game1")];
+    const response = await fetch(searchUrl);
+    const data = await response.text(); // Assuming the response is directly usable
+    const dom = new JSDOM(data);
+    const document = dom.window.document;
+    const games: Game[] = [];
+
+    const items = document.querySelectorAll("a");
+    items.forEach((item) => {
+      const icon =
+        item
+          .querySelector("div.search_capsule img")
+          ?.srcset.split(", ")
+          .pop()
+          ?.split(" ")[0] ?? "";
+      const appId = item.href.split("/")[4];
+      const url = `https://store.steampowered.com/app/${appId}`;
+      const title = item.querySelector("span.title")?.textContent ?? "";
+      console.log(appId, title);
+      games.push(new Game(title, url));
+    });
+
+    return games;
   }
 
   private buildSearchUrl(): string {
     const baseSearchUrl =
-      "https://store.steampowered.com/search/?maxprice=free&specials=1";
+      "https://store.steampowered.com/search/results/?maxprice=free&specials=1";
 
     const typesMap: Record<string, number> = {
       games: 998,
