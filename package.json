@@ -2,7 +2,7 @@
   "name": "free-games-notifier",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/app.js",
   "type": "module",
   "scripts": {
     "build": "tsc"
@@ -13,5 +13,9 @@
   "devDependencies": {
     "@types/node": "^20.12.7",
     "typescript": "^5.4.4"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.0",
+    "node-fetch": "^3.3.2"
   }
 }
