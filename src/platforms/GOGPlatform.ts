@@ -1,4 +1,4 @@
-import { GOGSettings } from "../configs/Settings.js";
+import { GOGSettings } from "../configs/types/types.js";
 import { Game } from "../games/Game.js";
 import { GamePlatform } from "./GamePlatform.js";
 

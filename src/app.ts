@@ -1,8 +1,8 @@
-import { Manager } from "./Manager.js";
-import { NtfyChannel } from "./notifiers/NtfyChannel.js";
-import { SteamPlatform } from "./platforms/SteamPlatform.js";
+import { DiscordChannel } from "./notifiers/DiscordChannel.js";
 
-const test = new NtfyChannel({ topic: "subuc" });
+const test = new DiscordChannel({
+  webhook: "",
+});
 test.send({
   title: "The Sims™ 4 Backyard Stuff",
   url: "https://store.steampowered.com/app/1235760/The_Sims_4_Backyard_Stuff/",

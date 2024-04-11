@@ -1,8 +1,8 @@
 import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
-import { SteamSettings } from "../configs/Settings.js";
 import { Game } from "../games/Game.js";
 import { GamePlatform } from "./GamePlatform.js";
+import { SteamSettings } from "../configs/types/types.js";
 
 export class SteamPlatform implements GamePlatform {
   private settings: SteamSettings;

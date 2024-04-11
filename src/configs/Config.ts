@@ -8,7 +8,6 @@ import {
   SteamPlatformFactory,
 } from "./PlatformFactory.js";
 import { NotifierFactory } from "./NotifierFactory.js";
-import { GOGSettings, SteamSettings } from "./Settings.js";
 import { AppConfig } from "./types/types.js";
 
 export class ConfigManager {

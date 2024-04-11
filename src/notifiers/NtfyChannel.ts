@@ -1,7 +1,7 @@
 import fetch from "node-fetch";
 import { Notifier } from "./Notifier.js";
-import { NtfySettings } from "../configs/Settings.js";
 import { Game } from "../games/Game.js";
+import { NtfySettings } from "../configs/types/types.js";
 
 export class NtfyChannel implements Notifier {
   private settings: NtfySettings;

@@ -1,7 +1,7 @@
 import { GOGPlatform } from "../platforms/GOGPlatform.js";
 import { GamePlatform } from "../platforms/GamePlatform.js";
 import { SteamPlatform } from "../platforms/SteamPlatform.js";
-import { GOGSettings, SteamSettings } from "./Settings.js";
+import { GOGSettings, SteamSettings } from "./types/types.js";
 
 export interface PlatformFactory {
   create(settings: any): GamePlatform;

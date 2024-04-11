@@ -1,6 +1,6 @@
 import { Notifier } from "../notifiers/Notifier.js";
 import { NtfyChannel } from "../notifiers/NtfyChannel.js";
-import { NtfySettings } from "./Settings.js";
+import { NtfySettings } from "./types/types.js";
 
 export interface NotifierFactory {
   create(settings: any): Notifier;
