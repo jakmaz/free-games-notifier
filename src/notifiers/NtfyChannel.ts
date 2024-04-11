@@ -5,37 +5,27 @@ import { Game } from "../games/Game.js";
 
 export class NtfyChannel implements Notifier {
   private settings: NtfySettings;
-  topic: string;
 
   constructor(settings: NtfySettings) {
     this.settings = settings;
-    this.topic = settings.topic;
   }
 
   async send(game: Game): Promise<void> {
-    const url = `https://ntfy.sh/`;
+    const url = `https://ntfy.sh/${this.settings.topic}`;
 
-    // Constructing the message to include game details
-    const data = {
-      topic: this.topic,
-      title: game.title,
-      message: "Free game available! Click to claim.",
-      click: game.url,
-      attach: game.iconUrl,
-      // actions: [
-      //   { action: "view", label: "Claim", clear: true }, // 'title' changed to 'label', added 'clear' if needed
-      //   { action: "dismiss", label: "Dismiss" }, // 'title' changed to 'label'
-      // ],
-    };
-
-    // Convert the message object to a JSON string
-    const messageStr = JSON.stringify(data);
+    // Convert the game title to base64 to avoid encoding issues
+    const encodedTitle = `=?UTF-8?B?${Buffer.from(game.title).toString("base64")}?=`;
 
     try {
       const response = await fetch(url, {
         method: "POST",
-        body: messageStr,
-        headers: { "Content-Type": "application/json" }, // Changed to 'application/json'
+        body: "Free game available! Click to claim.",
+        headers: {
+          Title: encodedTitle,
+          Click: game.url,
+          Attach: game.iconUrl,
+          Actions: "http, Claim, https://api.nest.com/open/yAxkasd, clear=true",
+        },
       });
 
       if (!response.ok) {
