@@ -24,7 +24,7 @@ export class NtfyChannel implements Notifier {
           Title: encodedTitle,
           Click: game.url,
           Attach: game.iconUrl,
-          Actions: "http, Claim, https://api.nest.com/open/yAxkasd, clear=true",
+          Actions: `http, Claim, ${game.url}, clear=true`,
         },
       });
 
