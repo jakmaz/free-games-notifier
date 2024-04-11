@@ -1,15 +1,22 @@
 {
   "name": "free-games-notifier",
   "version": "1.0.0",
-  "description": "",
+  "description": "A Node.js application that alerts users to games becoming temporarily free on various platforms. It utilizes web scraping and APIs to monitor game prices and sends notifications through various channels.",
   "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "build:start": "npm run build && npm run start"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "notifications",
+    "games",
+    "free",
+    "alerts"
+  ],
+  "author": "Jakub Mazur <j.mazur.nl@gmail.com> (https://github.com/jakmaz)",
+  "license": "Apache-2.0",
   "devDependencies": {
     "@types/config": "^3.3.4",
     "@types/jsdom": "^21.1.6",
