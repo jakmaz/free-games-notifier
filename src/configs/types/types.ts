@@ -9,7 +9,7 @@ export type AppConfig = {
 
 export type MainConfiguration = {
   platforms: string[];
-  notificationChannel: string;
+  notificationChannels: string[];
 };
 
 export type ChannelSettings = {
@@ -20,6 +20,7 @@ export type ChannelSettings = {
 export type PlatformSettings = {
   Steam?: SteamSettings;
   GOG?: GOGSettings;
+  Mocked?: MockedSettings;
 };
 
 export interface SteamSettings {
@@ -28,6 +29,10 @@ export interface SteamSettings {
 
 export interface GOGSettings {
   types: string[];
+}
+
+export interface MockedSettings {
+  amountOfGames: number;
 }
 
 export interface NtfySettings {

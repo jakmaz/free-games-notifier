@@ -1,15 +1,18 @@
 # Main configuration
 mainConfiguration:
   platforms:
-    - Steam
-  notificationChannel: Ntfy # Supported channels: Ntfy, Email
-
+    - Mocked
+  notificationChannels: # Supported channels: Ntfy, Discord
+    - Ntfy
+    - Discord
+# Configuration settings
 settings:
   # Notifications specific settings
   channelSettings:
     Ntfy:
       topic: free-games # Your Ntfy topic name
-      token: secretToken # Your Ntfy app token
+      token: secretToken # (optional) Your Ntfy app token
+    Discord:
 
   # Platform specific settings
   platformSettings:
@@ -17,3 +20,5 @@ settings:
       # List types of games (supported types: games, software, dlcs, demos, soundtracks,
       # playtests, videos, mods, hardware, bundles)
       types: [games, dlcs]
+    Mocked:
+      amountOfGames: 1

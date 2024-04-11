@@ -1,4 +1,4 @@
-import { ConfigManager } from "./configs/Config.js";
+import { ConfigManager } from "./configs/ConfigManager.js";
 import { Notifier } from "./notifiers/Notifier.js";
 import { GamePlatform } from "./platforms/GamePlatform.js";
 
@@ -9,14 +9,17 @@ export class Manager {
 
   public constructor() {
     this.config = ConfigManager.getInstance();
-    this.notifiers = this.config.getNotifiers();
-    this.platforms = this.config.getPlatforms();
+    this.notifiers = this.config.generateNotifiers();
+    this.platforms = this.config.generatePlatforms();
   }
 
   public async fetchAndNotify(): Promise<void> {
+    console.log("Fetching and notifying...");
+    console.log(this.platforms, this.notifiers);
     for (const platform of this.platforms) {
       try {
         const freeGames = await platform.fetchFreeGames();
+        console.log(freeGames);
         for (const game of freeGames) {
           for (const notifier of this.notifiers) {
             await notifier.send(game);
