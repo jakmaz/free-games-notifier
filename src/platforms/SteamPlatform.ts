@@ -16,24 +16,30 @@ export class SteamPlatform implements GamePlatform {
     console.log(`Fetching free games from: ${searchUrl}`);
 
     const response = await fetch(searchUrl);
-    const data = await response.text(); // Assuming the response is directly usable
+    const data = await response.text(); // The response is directly usable
     const dom = new JSDOM(data);
     const document = dom.window.document;
     const games: Game[] = [];
 
     const items = document.querySelectorAll("a");
     items.forEach((item) => {
-      const icon =
-        item
-          .querySelector("div.search_capsule img")
-          ?.srcset.split(", ")
-          .pop()
-          ?.split(" ")[0] ?? "";
+      // const icon =
+      //   item
+      //     .querySelector("div.search_capsule img")
+      //     ?.srcset.split(", ")
+      //     .pop()
+      //     ?.split(" ")[0] ?? "";
       const appId = item.href.split("/")[4];
       const url = `https://store.steampowered.com/app/${appId}`;
       const title = item.querySelector("span.title")?.textContent ?? "";
       console.log(appId, title);
-      games.push(new Game(title, url));
+      games.push(
+        new Game(
+          title,
+          url,
+          "https://cdn.cloudflare.steamstatic.com/steam/apps/1235760/header.jpg?t=1711660625",
+        ),
+      );
     });
 
     return games;

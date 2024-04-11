@@ -1,6 +1,7 @@
 import fetch from "node-fetch";
 import { Notifier } from "./Notifier.js";
 import { NtfySettings } from "../configs/Settings.js";
+import { Game } from "../games/Game.js";
 
 export class NtfyChannel implements Notifier {
   private settings: NtfySettings;
@@ -11,13 +12,30 @@ export class NtfyChannel implements Notifier {
     this.topic = settings.topic;
   }
 
-  async send(message: string): Promise<void> {
-    const url = `https://ntfy.sh/${this.topic}`;
+  async send(game: Game): Promise<void> {
+    const url = `https://ntfy.sh/`;
+
+    // Constructing the message to include game details
+    const data = {
+      topic: this.topic,
+      title: game.title,
+      message: "Free game available! Click to claim.",
+      click: game.url,
+      attach: game.iconUrl,
+      // actions: [
+      //   { action: "view", label: "Claim", clear: true }, // 'title' changed to 'label', added 'clear' if needed
+      //   { action: "dismiss", label: "Dismiss" }, // 'title' changed to 'label'
+      // ],
+    };
+
+    // Convert the message object to a JSON string
+    const messageStr = JSON.stringify(data);
+
     try {
       const response = await fetch(url, {
         method: "POST",
-        body: message,
-        headers: { "Content-Type": "text/plain" },
+        body: messageStr,
+        headers: { "Content-Type": "application/json" }, // Changed to 'application/json'
       });
 
       if (!response.ok) {

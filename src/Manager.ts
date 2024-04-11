@@ -1,4 +1,4 @@
-import { ConfigManager as ConfigManager } from "./configs/Config.js";
+import { ConfigManager } from "./configs/Config.js";
 import { Notifier } from "./notifiers/Notifier.js";
 import { GamePlatform } from "./platforms/GamePlatform.js";
 
@@ -19,9 +19,7 @@ export class Manager {
         const freeGames = await platform.fetchFreeGames();
         for (const game of freeGames) {
           for (const notifier of this.notifiers) {
-            await notifier.send(
-              `Free game found: ${game.title} on ${platform.constructor.name}`,
-            );
+            await notifier.send(game);
           }
         }
       } catch (error) {

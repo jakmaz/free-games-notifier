@@ -16,4 +16,4 @@ settings:
     Steam:
       # List types of games (supported types: games, software, dlcs, demos, soundtracks,
       # playtests, videos, mods, hardware, bundles)
-      types: [games]
+      types: [games, dlcs]

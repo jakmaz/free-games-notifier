@@ -1,3 +1,5 @@
+import { Game } from "../games/Game.js";
+
 export interface Notifier {
-  send(message: string): Promise<void>;
+  send(game: Game): Promise<void>;
 }
