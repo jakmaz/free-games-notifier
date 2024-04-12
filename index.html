@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Free Games Notifier 🎮🚀 | free-games-notifier</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Free Games Notifier 🎮🚀" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Notifies about currently free games to claim" />
+<meta property="og:description" content="Notifies about currently free games to claim" />
+<link rel="canonical" href="https://jakmaz.github.io/free-games-notifier/" />
+<meta property="og:url" content="https://jakmaz.github.io/free-games-notifier/" />
+<meta property="og:site_name" content="free-games-notifier" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Free Games Notifier 🎮🚀" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"Notifies about currently free games to claim","headline":"Free Games Notifier 🎮🚀","name":"free-games-notifier","url":"https://jakmaz.github.io/free-games-notifier/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/free-games-notifier/assets/css/style.css?v=4e6590607e60a918567bddf8183c30406e6502d6">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+<!-- Setup Google Analytics -->
+
+
+
+<!-- You can set your favicon here -->
+<!-- link rel="shortcut icon" type="image/x-icon" href="/free-games-notifier/favicon.ico" -->
+
+<!-- end custom head snippets -->
+
+  </head>
+  <body>
+    <div class="container-lg px-3 my-5 markdown-body">
+      
+      <h1><a href="https://jakmaz.github.io/free-games-notifier/">free-games-notifier</a></h1>
+      
+
+      <h1 id="free-games-notifier-">Free Games Notifier 🎮🚀</h1>
+
+<h2 id="overview">Overview</h2>
+
+<p>The Free Games Notifier is your ultimate tool to stay updated on all the latest free game offerings across multiple platforms! With a focus on delivering timely notifications directly to your preferred channel - never miss out on claiming your next favorite title. Whether you’re a casual gamer or a hardcore enthusiast, this project ensures you’re always in the loop with the best deals and free releases. 🌟</p>
+
+<h2 id="features">Features</h2>
+
+<ul>
+  <li><strong>Multi-Platform Support</strong> 🕹️: Tracks free games across various platforms.</li>
+  <li><strong>Instant Notifications</strong> 🔔: Sends out immediate alerts as soon as a new free game is available.</li>
+  <li><strong>Customizable Channels</strong> 📬: Choose your notification medium - Discord, Email, and more, to get the news where you want it.</li>
+  <li><strong>Flexible Configuration</strong> ⚙️: Easily configure which platforms to monitor and specify your notification preferences.</li>
+  <li><strong>User-friendly Interface</strong> 🌈: A simple yet powerful setup that gets you started in minutes.</li>
+</ul>
+
+<h3 id="-currently-supported-platforms-and-notifiers-">🌍 Currently Supported Platforms and Notifiers 🚀</h3>
+
+<p>The Free Games Notifier currently supports the following platforms and notification channels to ensure you receive timely updates about free games. We are always working to expand this list based on user feedback and demand.</p>
+
+<h4 id="platforms">Platforms</h4>
+<ul>
+  <li><strong>Steam</strong> 🕹️: Get alerts for free games, DLCs, and bundles available on Steam.</li>
+</ul>
+
+<h4 id="notification-channels">Notification Channels</h4>
+<ul>
+  <li><strong>Ntfy</strong> 🔔: Send notifications through the Ntfy service, which can push messages directly to your devices.</li>
+  <li><strong>Discord</strong> 💬: Configure alerts to be sent to a specific Discord channel, ideal for community engagement and quick access.</li>
+</ul>
+
+<p>We plan to add more platforms such as GOG, Epic Games Store, and Origin 🎮. Additionally, future updates will include support for other popular notification channels like Email 📧 and Slack 💼 to enhance accessibility and user preference compatibility.</p>
+
+<p>👀 Stay tuned for updates and feel free to contribute to the expansion of our supported platforms and notifiers!</p>
+
+<h2 id="getting-started">Getting Started</h2>
+
+<ol>
+  <li>
+    <p><strong>Clone the repository</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/jakmaz/free-games-notifier.git
+<span class="nb">cd </span>free-games-notifier
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Install dependencies</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p><strong>Set up configuration</strong></p>
+
+    <p>Edit the <code class="language-plaintext highlighter-rouge">config/default.yaml</code> file to set up your platform preferences and notification channels.</p>
+  </li>
+  <li>
+    <p><strong>Run the application</strong></p>
+
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm build:start
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="configuration">Configuration</h2>
+
+<p>Adjust the <code class="language-plaintext highlighter-rouge">config/default.yaml</code> to match your preferences. Here’s an example for setting up Steam and using Ntfy for notifications:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">mainConfiguration</span><span class="pi">:</span>
+  <span class="na">platforms</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Steam</span>
+  <span class="na">notificationChannel</span><span class="pi">:</span> <span class="s">Ntfy</span>
+
+<span class="na">settings</span><span class="pi">:</span>
+  <span class="na">channelSettings</span><span class="pi">:</span>
+    <span class="na">Ntfy</span><span class="pi">:</span>
+      <span class="na">topic</span><span class="pi">:</span> <span class="s">free-games</span>
+
+  <span class="na">platformSettings</span><span class="pi">:</span>
+    <span class="na">Steam</span><span class="pi">:</span>
+      <span class="na">userPreferences</span><span class="pi">:</span>
+        <span class="na">types</span><span class="pi">:</span> <span class="pi">[</span><span class="nv">games</span><span class="pi">,</span> <span class="nv">dlcs</span><span class="pi">,</span> <span class="nv">bundles</span><span class="pi">]</span>
+</code></pre></div></div>
+<p>For detailed configuration options, including how to set up different notification channels and platform-specific settings, please refer to our <a href="https://github.com/jakmaz/free-games-notifier/wiki/Configuration-Guide">Configuration Guide</a>.</p>
+
+<h2 id="contribution">Contribution</h2>
+
+<p>Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are <strong>greatly appreciated</strong>. 🙌</p>
+
+<ul>
+  <li>Fork the Project</li>
+  <li>Create your Feature Branch (<code class="language-plaintext highlighter-rouge">git checkout -b feature/AmazingFeature</code>)</li>
+  <li>Commit your Changes (<code class="language-plaintext highlighter-rouge">git commit -m 'Add some AmazingFeature'</code>)</li>
+  <li>Push to the Branch (<code class="language-plaintext highlighter-rouge">git push origin feature/AmazingFeature</code>)</li>
+  <li>Open a Pull Request</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>Distributed under the Apache 2.0 License. See <code class="language-plaintext highlighter-rouge">LICENSE</code> and <code class="language-plaintext highlighter-rouge">NOTICE</code> for more information.</p>
+
+<h2 id="acknowledgements">Acknowledgements</h2>
+
+<ul>
+  <li>All the gamers and developers contributing to this project! 🌟</li>
+  <li>The open-source community for continuous inspiration and support. 🤝</li>
+</ul>
+
+
+      
+      <div class="footer border-top border-gray-light mt-5 pt-3 text-right text-gray">
+        This site is open source. <a href="https://github.com/jakmaz/free-games-notifier/edit/main/README.md">Improve this page</a>.
+      </div>
+      
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js" integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+  </body>
+</html>
