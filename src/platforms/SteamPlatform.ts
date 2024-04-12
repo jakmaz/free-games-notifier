@@ -2,23 +2,33 @@ import fetch from "node-fetch";
 import { JSDOM } from "jsdom";
 import { Game } from "../games/Game.js";
 import { GamePlatform } from "./GamePlatform.js";
-import { SteamSettings } from "../configs/types/types.js";
+import { SteamGameType, SteamSettings } from "../configs/types/types.js";
 
-export class SteamPlatform implements GamePlatform {
-  private settings: SteamSettings;
-
-  constructor(config: SteamSettings) {
-    this.settings = config;
+export class SteamPlatform extends GamePlatform {
+  constructor(settings: SteamSettings) {
+    super(settings);
   }
 
-  async fetchFreeGames(): Promise<Game[]> {
+  public async fetchFreeGames(): Promise<Game[]> {
     const searchUrl = this.buildSearchUrl();
     console.log(`Fetching free games from: ${searchUrl}`);
+    try {
+      const response = await fetch(searchUrl);
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch free games from Steam: ${response.statusText}`,
+        );
+      }
+      const data = await response.text();
+      const dom = new JSDOM(data);
+      return this.extractGames(dom.window.document);
+    } catch (error) {
+      this.logError(error, "Error fetching free games from Steam");
+      throw error; // Re-throw to handle further up the chain if needed
+    }
+  }
 
-    const response = await fetch(searchUrl);
-    const data = await response.text(); // The response is directly usable
-    const dom = new JSDOM(data);
-    const document = dom.window.document;
+  private extractGames(document: Document) {
     const games: Game[] = [];
 
     const items = document.querySelectorAll("a");
@@ -41,15 +51,13 @@ export class SteamPlatform implements GamePlatform {
         ),
       );
     });
-
     return games;
   }
 
   private buildSearchUrl(): string {
     const baseSearchUrl =
       "https://store.steampowered.com/search/results/?maxprice=free&specials=1";
-
-    const typesMap: Record<string, number> = {
+    const typesMap: Record<SteamGameType, number> = {
       games: 998,
       software: 994,
       dlcs: 21,
@@ -62,17 +70,31 @@ export class SteamPlatform implements GamePlatform {
       bundles: 996,
     };
 
-    // Map user-preferred types to their corresponding query values
-    const typeQueryValues = this.settings.types
-      .filter((type) => typesMap[type]) // Ensure only supported types are included
-      .map((type) => typesMap[type]);
+    // Filter out unsupported types and log warnings for each unsupported type
+    const validTypes = this.settings.types.filter((type: SteamGameType) => {
+      if (!typesMap[type]) {
+        console.warn(
+          `Unsupported type '${type}' specified in settings, skipping...`,
+        );
+        return false;
+      }
+      return true;
+    });
 
-    // If no types were specified or valid, return the base URL
+    // Map the filtered, valid types to their corresponding query values
+    const typeQueryValues = validTypes.map(
+      (type: SteamGameType) => typesMap[type],
+    );
+
+    // Check if there are any valid type query values to append
     if (typeQueryValues.length === 0) {
-      return baseSearchUrl; // No type filtering
+      console.error(
+        "No valid types specified in settings; returning base URL without type filtering.",
+      );
+      return baseSearchUrl; // Return the base URL if no valid types found
     }
 
-    // Append the type filter to the base URL
+    // Construct and return the full search URL with type filters
     const typesQueryParam = `&category1=${typeQueryValues.join("%2C")}`;
     return `${baseSearchUrl}${typesQueryParam}`;
   }

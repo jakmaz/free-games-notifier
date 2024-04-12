@@ -1,17 +1,14 @@
+import { GamePlatform } from "./GamePlatform.js";
 import { MockedSettings } from "../configs/types/types.js";
 import { Game } from "../games/Game.js";
-import { GamePlatform } from "./GamePlatform.js";
 
-export class MockedPlatform implements GamePlatform {
-  private settings: MockedSettings;
-
-  constructor(config: MockedSettings) {
-    this.settings = config;
+export class MockedPlatform extends GamePlatform {
+  constructor(settings: MockedSettings) {
+    super(settings); // Pass settings to the base class constructor
   }
 
   async fetchFreeGames(): Promise<Game[]> {
     const amountOfGames = this.settings.amountOfGames;
-
     const games: Game[] = [
       new Game(
         "Cyberpunk 2077",

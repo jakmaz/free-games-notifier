@@ -1,14 +1,14 @@
+import { GamePlatform } from "./GamePlatform.js";
 import { GOGSettings } from "../configs/types/types.js";
 import { Game } from "../games/Game.js";
-import { GamePlatform } from "./GamePlatform.js";
 
-export class GOGPlatform implements GamePlatform {
-  private settings: GOGSettings;
-
-  constructor(config: GOGSettings) {
-    this.settings = config;
+export class GOGPlatform extends GamePlatform {
+  constructor(settings: GOGSettings) {
+    super(settings); // Pass settings to the base class constructor
   }
-  fetchFreeGames(): Promise<Game[]> {
-    throw new Error("Method not implemented.");
+
+  async fetchFreeGames(): Promise<Game[]> {
+    // Implementation for fetching games from GOG
+    throw new Error("Method not implemented."); // Placeholder for actual implementation
   }
 }

@@ -14,6 +14,8 @@ import {
   NtfyNotifierFactory,
 } from "./NotifierFactory.js";
 import { AppConfig } from "./types/types.js";
+import { Scheduler } from "../Scheduler.js";
+import { ScheduledGameNotifier } from "../ScheduledGameNotifier.js";
 
 export class ConfigManager {
   private static instance: ConfigManager;
@@ -68,7 +70,7 @@ export class ConfigManager {
     this.notifierFactoryRegistry[notifierName] = factory;
   }
 
-  public generatePlatforms(): GamePlatform[] {
+  private createPlatforms(): GamePlatform[] {
     const platforms: GamePlatform[] = [];
 
     const platformNames = this.config.mainConfiguration.platforms;
@@ -82,6 +84,7 @@ export class ConfigManager {
           // Use the factory to create an instance of the platform with its settings.
           const platform = factory.create(settings);
           platforms.push(platform);
+          console.info(`Initialized platform: ${platformName}`);
         } else {
           console.warn(`Settings missing for platform: ${platformName}`);
         }
@@ -93,7 +96,7 @@ export class ConfigManager {
     return platforms;
   }
 
-  public generateNotifiers(): Notifier[] {
+  private createNotifiers(): Notifier[] {
     const notifiers: Notifier[] = [];
 
     const notifierNames = this.config.mainConfiguration.notificationChannels;
@@ -107,6 +110,7 @@ export class ConfigManager {
           // Use the factory to create an instance of the notifier with its settings.
           const notifier = factory.create(settings);
           notifiers.push(notifier);
+          console.info(`Initialized notifier: ${notifierName}`);
         } else {
           console.warn(`Settings missing for notifier: ${notifierName}`);
         }
@@ -116,5 +120,30 @@ export class ConfigManager {
     });
 
     return notifiers;
+  }
+
+  public createScheduler(): Scheduler {
+    const scheduler = new Scheduler();
+    const platforms = this.createPlatforms();
+    const notifiers = this.createNotifiers();
+
+    platforms.forEach((platform) => {
+      // Access settings directly from the platform instance
+      const settings = platform.getSettings();
+
+      if (settings && settings.schedule) {
+        const scheduledNotifier = new ScheduledGameNotifier(
+          platform,
+          notifiers,
+          settings.schedule,
+        );
+        scheduler.addNotifier(scheduledNotifier);
+        console.info(
+          `Scheduled notifier for ${platform.constructor.name} with ${settings.schedule.interval} interval or ${settings.schedule.cron} cron interval`,
+        );
+      }
+    });
+
+    return scheduler;
   }
 }

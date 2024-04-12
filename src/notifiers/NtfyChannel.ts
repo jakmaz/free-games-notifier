@@ -3,17 +3,16 @@ import { Notifier } from "./Notifier.js";
 import { Game } from "../games/Game.js";
 import { NtfySettings } from "../configs/types/types.js";
 
-export class NtfyChannel implements Notifier {
+export class NtfyChannel extends Notifier {
   private settings: NtfySettings;
 
   constructor(settings: NtfySettings) {
+    super();
     this.settings = settings;
   }
 
   async send(game: Game): Promise<void> {
     const url = `https://ntfy.sh/${this.settings.topic}`;
-
-    // Convert the game title to base64 to avoid encoding issues
     const encodedTitle = `=?UTF-8?B?${Buffer.from(game.title).toString("base64")}?=`;
 
     try {
@@ -32,9 +31,9 @@ export class NtfyChannel implements Notifier {
         throw new Error(`Failed to send notification: ${response.statusText}`);
       }
 
-      console.log("Notification sent successfully.");
+      this.logSuccess();
     } catch (error) {
-      console.error("Error sending notification:", error);
+      this.logError(error);
       throw error;
     }
   }
