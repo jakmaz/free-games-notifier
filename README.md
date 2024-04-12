@@ -72,7 +72,7 @@ settings:
       userPreferences:
         types: [games, dlcs, bundles]
 ```
-For detailed configuration options, including how to set up different notification channels and platform-specific settings, please refer to our [Configuration Guide](/docs/CONFIGURATION.md).
+For detailed configuration options, including how to set up different notification channels and platform-specific settings, please refer to our [Configuration Guide](https://github.com/jakmaz/free-games-notifier/wiki/Configuration-Guide).
 
 ## Contribution
 
