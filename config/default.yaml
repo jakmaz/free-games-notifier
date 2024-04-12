@@ -13,6 +13,7 @@ settings:
       topic: free-games # Your Ntfy topic name
       token: secretToken # (optional) Your Ntfy app token
     Discord:
+      webhookUrl:
 
   # Platform specific settings
   platformSettings:

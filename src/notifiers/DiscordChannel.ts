@@ -11,7 +11,7 @@ export class DiscordChannel implements Notifier {
   }
 
   async send(game: Game): Promise<void> {
-    const url = this.settings.webhook;
+    const url = this.settings.webhookUrl;
 
     try {
       const response = await fetch(url, {

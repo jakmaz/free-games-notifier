@@ -41,5 +41,5 @@ export interface NtfySettings {
 }
 
 export interface DiscordSettings {
-  webhook: string;
+  webhookUrl: string;
 }
