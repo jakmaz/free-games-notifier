@@ -6,11 +6,26 @@ The Free Games Notifier is your ultimate tool to stay updated on all the latest 
 
 ## Features
 
-- **Multi-Platform Support** 🕹️: Tracks free games across various platforms such as Steam (more soon)
+- **Multi-Platform Support** 🕹️: Tracks free games across various platforms.
 - **Instant Notifications** 🔔: Sends out immediate alerts as soon as a new free game is available.
 - **Customizable Channels** 📬: Choose your notification medium - Discord, Email, and more, to get the news where you want it.
 - **Flexible Configuration** ⚙️: Easily configure which platforms to monitor and specify your notification preferences.
 - **User-friendly Interface** 🌈: A simple yet powerful setup that gets you started in minutes.
+
+### 🌍 Currently Supported Platforms and Notifiers 🚀
+
+The Free Games Notifier currently supports the following platforms and notification channels to ensure you receive timely updates about free games. We are always working to expand this list based on user feedback and demand.
+
+#### Platforms
+- **Steam** 🕹️: Get alerts for free games, DLCs, and bundles available on Steam.
+
+#### Notification Channels
+- **Ntfy** 🔔: Send notifications through the Ntfy service, which can push messages directly to your devices.
+- **Discord** 💬: Configure alerts to be sent to a specific Discord channel, ideal for community engagement and quick access.
+
+We plan to add more platforms such as GOG, Epic Games Store, and Origin 🎮. Additionally, future updates will include support for other popular notification channels like Email 📧 and Slack 💼 to enhance accessibility and user preference compatibility.
+
+👀 Stay tuned for updates and feel free to contribute to the expansion of our supported platforms and notifiers!
 
 ## Getting Started
 
@@ -34,12 +49,12 @@ The Free Games Notifier is your ultimate tool to stay updated on all the latest 
 4. **Run the application**
 
    ```bash
-   npm start
+   npm build:start
    ```
 
 ## Configuration
 
-Adjust the `config/default.yaml` to match your preferences. Here's an example for setting up Steam and GOG platforms and using Discord for notifications:
+Adjust the `config/default.yaml` to match your preferences. Here's an example for setting up Steam and using Ntfy for notifications:
 
 ```yaml
 mainConfiguration:
@@ -57,6 +72,7 @@ settings:
       userPreferences:
         types: [games, dlcs, bundles]
 ```
+For detailed configuration options, including how to set up different notification channels and platform-specific settings, please refer to our [Configuration Guide](/docs/CONFIGURATION.md).
 
 ## Contribution
 
@@ -76,5 +92,3 @@ Distributed under the Apache 2.0 License. See `LICENSE` and `NOTICE` for more in
 
 - All the gamers and developers contributing to this project! 🌟
 - The open-source community for continuous inspiration and support. 🤝
-
-Grab your controller, and let's dive into the world of gaming together with the Free Games Notifier! 🎉🎮
