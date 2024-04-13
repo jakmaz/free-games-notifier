@@ -3,10 +3,11 @@ import { Notifier } from "./Notifier.js";
 import { Game } from "../games/Game.js";
 import { DiscordSettings } from "../configs/types/types.js";
 
-export class DiscordChannel implements Notifier {
+export class DiscordChannel extends Notifier {
   private settings: DiscordSettings;
 
   constructor(settings: DiscordSettings) {
+    super();
     this.settings = settings;
   }
 
@@ -16,22 +17,16 @@ export class DiscordChannel implements Notifier {
     try {
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: `🎮 **${game.title}** is now free! Click the title in the embed below to claim your game.`,
+          content: `🎮 **${game.title}** is now free! Click the title to claim your game.`,
           embeds: [
             {
               title: game.title,
-              url: game.url, // This makes the title of the embed a hyperlink
-              color: 0x0099ff, // A color for the side strip of the embed, this is blue
-              image: {
-                url: game.iconUrl, // The URL to the game's photo
-              },
-              footer: {
-                text: "Free Game Alert", // You can add a footer if you want
-              },
+              url: game.url,
+              color: 0x0099ff,
+              image: { url: game.iconUrl },
+              footer: { text: "Free Game Alert" },
             },
           ],
         }),
@@ -41,9 +36,9 @@ export class DiscordChannel implements Notifier {
         throw new Error(`Failed to send notification: ${response.statusText}`);
       }
 
-      console.log("Notification sent successfully.");
+      this.logSuccess();
     } catch (error) {
-      console.error("Error sending notification:", error);
+      this.logError(error);
       throw error;
     }
   }

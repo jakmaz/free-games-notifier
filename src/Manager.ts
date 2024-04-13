@@ -1,36 +1,43 @@
+import chalk from "chalk";
+import { Scheduler } from "./Scheduler.js";
 import { ConfigManager } from "./configs/ConfigManager.js";
-import { Notifier } from "./notifiers/Notifier.js";
-import { GamePlatform } from "./platforms/GamePlatform.js";
 
 export class Manager {
-  private notifiers: Notifier[];
-  private platforms: GamePlatform[];
-  private config: ConfigManager;
+  private configManager: ConfigManager;
+  private scheduler: Scheduler;
 
-  public constructor() {
-    this.config = ConfigManager.getInstance();
-    this.notifiers = this.config.generateNotifiers();
-    this.platforms = this.config.generatePlatforms();
+  constructor() {
+    this.printWelcomeMessage();
+    this.configManager = new ConfigManager();
+  }
+  public run(): void {
+    this.loadConfig();
+    this.scheduler = this.configManager.createScheduler();
+    this.printSchedule();
   }
 
-  public async fetchAndNotify(): Promise<void> {
-    console.log("Fetching and notifying...");
-    console.log(this.platforms, this.notifiers);
-    for (const platform of this.platforms) {
-      try {
-        const freeGames = await platform.fetchFreeGames();
-        console.log(freeGames);
-        for (const game of freeGames) {
-          for (const notifier of this.notifiers) {
-            await notifier.send(game);
-          }
-        }
-      } catch (error) {
-        console.error(
-          `Error fetching/notifying for ${platform.constructor.name}:`,
-          error,
-        );
-      }
+  public loadConfig(): void {
+    console.log("Loading configuration...");
+    try {
+      this.configManager.loadConfig();
+      console.log(chalk.green("Configuration loaded successfully!"));
+      this.printDivider();
+    } catch (error) {
+      console.error(chalk.red(`Error loading configuration: ${error.message}`));
+      process.exit(1);
     }
+  }
+
+  public printSchedule(): void {
+    this.scheduler.printSchedule();
+  }
+
+  private printWelcomeMessage(): void {
+    console.log(chalk.bold.green("Welcome to the Free Game Notifier!"));
+    this.printDivider();
+  }
+
+  private printDivider(): void {
+    console.log(chalk.yellow("================================="));
   }
 }

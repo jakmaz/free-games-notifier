@@ -2,24 +2,25 @@
 mainConfiguration:
   platforms:
     - Mocked
-  notificationChannels: # Supported channels: Ntfy, Discord
+  notificationChannels:
     - Ntfy
-    - Discord
+
 # Configuration settings
 settings:
   # Notifications specific settings
   channelSettings:
     Ntfy:
-      topic: free-games # Your Ntfy topic name
-      token: secretToken # (optional) Your Ntfy app token
+      topic: free-games
     Discord:
-      webhookUrl:
+      webhookUrl: https://discord.com/api/webhooks/...
 
   # Platform specific settings
   platformSettings:
     Steam:
-      # List types of games (supported types: games, software, dlcs, demos, soundtracks,
-      # playtests, videos, mods, hardware, bundles)
       types: [games, dlcs]
+      schedule:
+        interval: 30
     Mocked:
       amountOfGames: 1
+      schedule:
+        interval: 30

@@ -1,4 +1,5 @@
-// Define the complete configuration structure
+// This file defines the types used in the application
+
 export type AppConfig = {
   mainConfiguration: MainConfiguration;
   settings: {
@@ -8,9 +9,13 @@ export type AppConfig = {
 };
 
 export type MainConfiguration = {
-  platforms: string[];
-  notificationChannels: string[];
+  platforms: ValidPlatform[];
+  notificationChannels: ValidNotificationChannel[];
 };
+
+export type ValidPlatform = "Steam" | "Gog";
+
+export type ValidNotificationChannel = "Ntfy" | "Discord";
 
 export type ChannelSettings = {
   Ntfy?: NtfySettings;
@@ -23,23 +28,43 @@ export type PlatformSettings = {
   Mocked?: MockedSettings;
 };
 
-export interface SteamSettings {
-  types: string[];
-}
+export type SteamSettings = {
+  types: SteamGameType[];
+  schedule: ScheduleSettings;
+};
 
-export interface GOGSettings {
-  types: string[];
-}
+export type SteamGameType =
+  | "games"
+  | "software"
+  | "dlcs"
+  | "demos"
+  | "soundtracks"
+  | "playtests"
+  | "videos"
+  | "mods"
+  | "hardware"
+  | "bundles";
 
-export interface MockedSettings {
+export type GOGSettings = {
+  types: string[];
+  schedule: ScheduleSettings;
+};
+
+export type MockedSettings = {
   amountOfGames: number;
-}
+  schedule: ScheduleSettings;
+};
 
-export interface NtfySettings {
+export type NtfySettings = {
   topic: string;
   token?: string;
-}
+};
 
-export interface DiscordSettings {
+export type DiscordSettings = {
   webhookUrl: string;
-}
+};
+
+export type ScheduleSettings = {
+  interval?: number;
+  cron?: string;
+};

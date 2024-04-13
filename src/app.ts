@@ -1,4 +1,4 @@
 import { Manager } from "./Manager.js";
 
-const test = new Manager();
-test.fetchAndNotify();
+const app = new Manager();
+app.run();
