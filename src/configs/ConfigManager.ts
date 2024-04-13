@@ -1,5 +1,3 @@
-import { readFileSync } from "fs";
-import { load } from "js-yaml";
 import { GamePlatform } from "../platforms/GamePlatform.js";
 import { Notifier } from "../notifiers/Notifier.js";
 import { AppConfig } from "./types/types.js";
@@ -13,23 +11,11 @@ export class ConfigManager {
   private factoryRegistry: FactoryRegistry;
 
   public constructor() {
-    this.config = ConfigLoader.loadConfig("config/default.yaml");
     this.factoryRegistry = new FactoryRegistry();
   }
 
-  public loadConfig(): AppConfig {
-    try {
-      const configFile = readFileSync("config/default.yaml", "utf8");
-      const loadedConfig = load(configFile);
-      if (typeof loadedConfig === "object" && loadedConfig !== null) {
-        return loadedConfig as AppConfig;
-      } else {
-        throw new Error("Configuration format is incorrect.");
-      }
-    } catch (error) {
-      console.error("Error reading configuration:", error);
-      throw new Error("Failed to read configuration.");
-    }
+  public loadConfig() {
+    this.config = ConfigLoader.loadConfig("config/default.yaml");
   }
 
   private createPlatforms(): GamePlatform[] {

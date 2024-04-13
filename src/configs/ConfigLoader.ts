@@ -10,11 +10,23 @@ export class ConfigLoader {
       if (typeof loadedConfig === "object" && loadedConfig !== null) {
         return loadedConfig as AppConfig;
       } else {
-        throw new Error("Configuration format is incorrect.");
+        throw new Error(
+          "Configuration format is incorrect. Please check the YAML structure.",
+        );
       }
     } catch (error) {
-      console.error("Error reading configuration:", error);
-      throw new Error("Failed to read configuration.");
+      if (error.code === "ENOENT") {
+        // File not found error
+        throw new Error(
+          `Configuration file not found at '${filePath}'. Please ensure the file exists.`,
+        );
+      } else if (error.name === "YAMLException") {
+        // YAML parsing error
+        throw new Error(`Syntax error in configuration file: ${error.message}`);
+      } else {
+        // General error handling
+        throw new Error(`Failed to read configuration: ${error.message}`);
+      }
     }
   }
 }
