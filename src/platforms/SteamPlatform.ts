@@ -6,7 +6,7 @@ import { SteamGameType, SteamSettings } from "../configs/types/types.js";
 
 export class SteamPlatform extends GamePlatform {
   constructor(settings: SteamSettings) {
-    super(settings);
+    super("Steam", settings);
   }
 
   public async fetchFreeGames(): Promise<Game[]> {

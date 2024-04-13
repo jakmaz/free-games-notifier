@@ -11,7 +11,7 @@ export class Scheduler {
 
   public addNotifier(notifier: ScheduledGameNotifier): void {
     this.scheduledNotifiers.push(notifier);
-    const job = notifier.generateJob(); // Create and retrieve the job from the notifier
+    const job = notifier.getJob(); // Create and retrieve the job from the notifier
 
     // Check the type of job and add it to the scheduler appropriately
     if (job instanceof SimpleIntervalJob) {
@@ -21,5 +21,11 @@ export class Scheduler {
     } else {
       throw new Error("Unsupported job type");
     }
+  }
+
+  public printSchedule(): void {
+    this.scheduledNotifiers.forEach((notifier) => {
+      notifier.printStatus();
+    });
   }
 }

@@ -1,3 +1,4 @@
 import { Manager } from "./Manager.js";
 
-const test = new Manager();
+const app = new Manager();
+app.run();

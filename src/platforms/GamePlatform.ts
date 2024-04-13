@@ -2,17 +2,21 @@ import { Game } from "../games/Game.js";
 
 export abstract class GamePlatform {
   protected settings: any;
+  private name: string;
 
-  constructor(settings: any) {
+  constructor(name: string, settings: any) {
     this.settings = settings;
+    this.name = name;
   }
 
-  // Abstract method that subclasses must implement
   abstract fetchFreeGames(): Promise<Game[]>;
 
-  // Common method available to all subclasses
   getSettings(): any {
     return this.settings;
+  }
+
+  public getName(): string {
+    return this.name;
   }
 
   // Helper method to handle common logics such as error logging

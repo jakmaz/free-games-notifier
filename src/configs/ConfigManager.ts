@@ -2,46 +2,22 @@ import { readFileSync } from "fs";
 import { load } from "js-yaml";
 import { GamePlatform } from "../platforms/GamePlatform.js";
 import { Notifier } from "../notifiers/Notifier.js";
-import {
-  GOGPlatformFactory,
-  MockedPlatformFactory,
-  PlatformFactory,
-  SteamPlatformFactory,
-} from "./PlatformFactory.js";
-import {
-  DiscordNotifierFactory,
-  NotifierFactory,
-  NtfyNotifierFactory,
-} from "./NotifierFactory.js";
 import { AppConfig } from "./types/types.js";
 import { Scheduler } from "../Scheduler.js";
 import { ScheduledGameNotifier } from "../ScheduledGameNotifier.js";
+import { FactoryRegistry } from "./FactoryRegistry.js";
+import { ConfigLoader } from "./ConfigLoader.js";
 
 export class ConfigManager {
-  private static instance: ConfigManager;
-  private config: AppConfig; // Use the AppConfig type
+  private config: AppConfig;
+  private factoryRegistry: FactoryRegistry;
 
-  private platformFactoryRegistry: { [key: string]: PlatformFactory } = {};
-  private notifierFactoryRegistry: { [key: string]: NotifierFactory } = {};
-
-  protected constructor() {
-    this.config = this.loadConfig();
-
-    this.registerPlatformFactory("Steam", new SteamPlatformFactory());
-    this.registerPlatformFactory("Mocked", new MockedPlatformFactory());
-    // this.registerPlatformFactory("Gog", new GOGPlatformFactory());
-    this.registerNotifierFactory("Ntfy", new NtfyNotifierFactory());
-    this.registerNotifierFactory("Discord", new DiscordNotifierFactory());
+  public constructor() {
+    this.config = ConfigLoader.loadConfig("config/default.yaml");
+    this.factoryRegistry = new FactoryRegistry();
   }
 
-  public static getInstance(): ConfigManager {
-    if (!ConfigManager.instance) {
-      ConfigManager.instance = new ConfigManager();
-    }
-    return ConfigManager.instance;
-  }
-
-  private loadConfig(): AppConfig {
+  public loadConfig(): AppConfig {
     try {
       const configFile = readFileSync("config/default.yaml", "utf8");
       const loadedConfig = load(configFile);
@@ -56,20 +32,6 @@ export class ConfigManager {
     }
   }
 
-  private registerPlatformFactory(
-    platformName: string,
-    factory: PlatformFactory,
-  ): void {
-    this.platformFactoryRegistry[platformName] = factory;
-  }
-
-  private registerNotifierFactory(
-    notifierName: string,
-    factory: NotifierFactory,
-  ): void {
-    this.notifierFactoryRegistry[notifierName] = factory;
-  }
-
   private createPlatforms(): GamePlatform[] {
     const platforms: GamePlatform[] = [];
 
@@ -77,7 +39,7 @@ export class ConfigManager {
 
     // Iterate through each platform name defined in the configuration.
     platformNames.forEach((platformName: string) => {
-      const factory = this.platformFactoryRegistry[platformName];
+      const factory = this.factoryRegistry.getPlatformFactory(platformName);
       if (factory) {
         const settings = this.config.settings.platformSettings[platformName];
         if (settings) {
@@ -103,7 +65,7 @@ export class ConfigManager {
 
     // Iterate through each notifier name.
     notifierNames.forEach((notifierName: string) => {
-      const factory = this.notifierFactoryRegistry[notifierName];
+      const factory = this.factoryRegistry.getNotifierFactory(notifierName);
       if (factory) {
         const settings = this.config.settings.channelSettings[notifierName];
         if (settings) {
@@ -139,7 +101,7 @@ export class ConfigManager {
         );
         scheduler.addNotifier(scheduledNotifier);
         console.info(
-          `Scheduled notifier for ${platform.constructor.name} with ${settings.schedule.interval} interval or ${settings.schedule.cron} cron interval`,
+          `Scheduled notifier for ${platform.getName()} with ${settings.schedule.interval} interval and ${settings.schedule.cron} cron interval`,
         );
       }
     });

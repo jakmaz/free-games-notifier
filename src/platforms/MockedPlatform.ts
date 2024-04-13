@@ -4,7 +4,7 @@ import { Game } from "../games/Game.js";
 
 export class MockedPlatform extends GamePlatform {
   constructor(settings: MockedSettings) {
-    super(settings); // Pass settings to the base class constructor
+    super("Mocked", settings); // Pass settings to the base class constructor
   }
 
   async fetchFreeGames(): Promise<Game[]> {
