@@ -33,23 +33,15 @@ export class SteamPlatform extends GamePlatform {
 
     const items = document.querySelectorAll("a");
     items.forEach((item) => {
-      // const icon =
-      //   item
-      //     .querySelector("div.search_capsule img")
-      //     ?.srcset.split(", ")
-      //     .pop()
-      //     ?.split(" ")[0] ?? "";
       const appId = item.href.split("/")[4];
       const url = `https://store.steampowered.com/app/${appId}`;
       const title = item.querySelector("span.title")?.textContent ?? "";
+      const imageElement = item.querySelector(
+        ".search_capsule img",
+      ) as HTMLImageElement | null;
+      const iconUrl = imageElement ? imageElement.src : undefined;
       console.log(appId, title);
-      games.push(
-        new Game(
-          title,
-          url,
-          "https://cdn.cloudflare.steamstatic.com/steam/apps/1235760/header.jpg?t=1711660625",
-        ),
-      );
+      games.push(new Game(title, url, iconUrl));
     });
     return games;
   }
