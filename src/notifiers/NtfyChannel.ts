@@ -23,7 +23,7 @@ export class NtfyChannel extends Notifier {
           Title: encodedTitle,
           Click: game.url,
           Attach: game.iconUrl,
-          Actions: `http, Claim, ${game.url}, clear=true`,
+          Actions: `view, Claim, ${game.url}`,
         },
       });
 
