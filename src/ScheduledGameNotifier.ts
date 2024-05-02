@@ -1,8 +1,11 @@
+import { promises as fs } from "fs";
+import { parse } from "csv-parse";
 import { AsyncTask, SimpleIntervalJob, CronJob, Job } from "toad-scheduler";
-import { GamePlatform } from "./platforms/GamePlatform.js"; // Ensure the correct path
+import { GamePlatform } from "./platforms/GamePlatform.js";
 import { Notifier } from "./notifiers/Notifier.js";
 import { ScheduleSettings } from "./configs/types/types.js";
 import chalk from "chalk";
+import { Game } from "./games/Game.js";
 
 export class ScheduledGameNotifier {
   private job: Job;
@@ -52,10 +55,18 @@ export class ScheduledGameNotifier {
 
   private async fetchAndNotify(): Promise<void> {
     try {
-      const freeGames = await this.platform.fetchFreeGames();
+      const freeGames: Game[] = await this.platform.fetchFreeGames();
+      const archivedGames: String[] = await this.getArchivedGames();
       for (const game of freeGames) {
-        for (const notifier of this.notifiers) {
-          await notifier.send(game);
+        if (!archivedGames.includes(game.csvString())) {
+          await this.archiveGame(game);
+          for (const notifier of this.notifiers) {
+            await notifier.send(game);
+          }
+        } else {
+          console.log(
+            `Game ${game.title} has already been notified. Skipping...`,
+          );
         }
       }
     } catch (error) {
@@ -64,6 +75,25 @@ export class ScheduledGameNotifier {
         error,
       );
     }
+  }
+
+  private async getArchivedGames(): Promise<string[]> {
+    const csvData = await fs.readFile("config/archive.csv", "utf-8");
+    return new Promise((resolve, reject) => {
+      parse(csvData, { columns: false }, (err, data: string[][]) => {
+        if (err) {
+          console.error(`Error parsing archive.csv: ${err}`);
+          reject(err);
+        } else {
+          // Mapping each row to combine title and URL into a single string
+          resolve(data.map((row) => `${row[0]},${row[1]}`));
+        }
+      });
+    });
+  }
+
+  private async archiveGame(game: Game): Promise<void> {
+    await fs.appendFile("config/archive.csv", `${game.csvString()}\n`);
   }
 
   printStatus() {

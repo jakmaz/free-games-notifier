@@ -9,7 +9,7 @@ export class Game {
     this.iconUrl = iconUrl;
   }
 
-  toString(): string {
-    return `Game Title: ${this.title}, URL: ${this.url}, IconURL: ${this.iconUrl}`;
+  csvString(): string {
+    return `${this.title},${this.url}`;
   }
 }
