@@ -23,4 +23,4 @@ settings:
     Mocked:
       amountOfGames: 1
       schedule:
-        interval: 30
+        interval: 10
