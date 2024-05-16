@@ -4,6 +4,7 @@ import {
   NtfyNotifierFactory,
 } from "./NotifierFactory.js";
 import {
+  EpicGamesPlatformFactory,
   MockedPlatformFactory,
   PlatformFactory,
   SteamPlatformFactory,
@@ -15,6 +16,7 @@ export class FactoryRegistry {
 
   constructor() {
     this.registerPlatformFactory("Steam", new SteamPlatformFactory());
+    this.registerPlatformFactory("EpicGames", new EpicGamesPlatformFactory());
     this.registerPlatformFactory("Mocked", new MockedPlatformFactory());
     this.registerNotifierFactory("Ntfy", new NtfyNotifierFactory());
     this.registerNotifierFactory("Discord", new DiscordNotifierFactory());
