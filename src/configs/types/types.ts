@@ -13,7 +13,7 @@ export type MainConfiguration = {
   notificationChannels: ValidNotificationChannel[];
 };
 
-export type ValidPlatform = "Steam" | "Gog";
+export type ValidPlatform = "Steam" | "EpicGames" | "Gog" | "Mocked";
 
 export type ValidNotificationChannel = "Ntfy" | "Discord";
 
@@ -24,6 +24,7 @@ export type ChannelSettings = {
 
 export type PlatformSettings = {
   Steam?: SteamSettings;
+  EpicGames?: EpicGamesSettings;
   GOG?: GOGSettings;
   Mocked?: MockedSettings;
 };
@@ -47,6 +48,10 @@ export type SteamGameType =
 
 export type GOGSettings = {
   types: string[];
+  schedule: ScheduleSettings;
+};
+
+export type EpicGamesSettings = {
   schedule: ScheduleSettings;
 };
 

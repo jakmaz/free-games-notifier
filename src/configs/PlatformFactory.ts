@@ -1,8 +1,14 @@
+import EpicGamesPlatform from "../platforms/EpicGamesPlatform.js";
 import { GOGPlatform } from "../platforms/GOGPlatform.js";
 import { GamePlatform } from "../platforms/GamePlatform.js";
 import { MockedPlatform } from "../platforms/MockedPlatform.js";
 import { SteamPlatform } from "../platforms/SteamPlatform.js";
-import { GOGSettings, MockedSettings, SteamSettings } from "./types/types.js";
+import {
+  EpicGamesSettings,
+  GOGSettings,
+  MockedSettings,
+  SteamSettings,
+} from "./types/types.js";
 
 export interface PlatformFactory {
   create(settings: any): GamePlatform;
@@ -11,6 +17,12 @@ export interface PlatformFactory {
 export class SteamPlatformFactory implements PlatformFactory {
   create(settings: SteamSettings): GamePlatform {
     return new SteamPlatform(settings);
+  }
+}
+
+export class EpicGamesPlatformFactory implements PlatformFactory {
+  create(settings: EpicGamesSettings): GamePlatform {
+    return new EpicGamesPlatform(settings);
   }
 }
 

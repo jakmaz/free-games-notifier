@@ -40,7 +40,6 @@ export class SteamPlatform extends GamePlatform {
         ".search_capsule img",
       ) as HTMLImageElement | null;
       const iconUrl = imageElement ? imageElement.src : undefined;
-      console.log(appId, title);
       games.push(new Game(title, url, iconUrl));
     });
     return games;
