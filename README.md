@@ -1,5 +1,10 @@
 # Free Games Notifier 🎮🚀
 
+
+![banner](https://github.com/jakmaz/free-games-notifier/assets/136567999/302a6a1e-6660-4fa6-b3d2-ad81ac814f40)
+
+
+
 ## Overview
 
 The Free Games Notifier is your ultimate tool to stay updated on all the latest free game offerings across multiple platforms! With a focus on delivering timely notifications directly to your preferred channel - never miss out on claiming your next favorite title. Whether you're a casual gamer or a hardcore enthusiast, this project ensures you're always in the loop with the best deals and free releases. 🌟
