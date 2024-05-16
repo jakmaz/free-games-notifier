@@ -11,8 +11,7 @@ The Free Games Notifier is your ultimate tool to stay updated on all the latest 
 
 ## Features
 
-- **Multi-Platform Support** 🕹️: Tracks free games across various platforms.
-- **Instant Notifications** 🔔: Sends out immediate alerts as soon as a new free game is available.
+- **Multi-Platform Support** 🕹️: Tracks free games across various platforms including Steam, Epic Games Store, and more.
 - **Customizable Channels** 📬: Choose your notification medium - Discord, Email, and more, to get the news where you want it.
 - **Flexible Configuration** ⚙️: Easily configure which platforms to monitor and specify your notification preferences.
 - **User-friendly Interface** 🌈: A simple yet powerful setup that gets you started in minutes.
@@ -23,12 +22,13 @@ The Free Games Notifier currently supports the following platforms and notificat
 
 #### Platforms
 - **Steam** 🕹️: Get alerts for free games, DLCs, and bundles available on Steam.
+- **Epic Games Store** 🎮: Stay informed about free game offers directly from the Epic Games Store.
 
 #### Notification Channels
 - **Ntfy** 🔔: Send notifications through the Ntfy service, which can push messages directly to your devices.
 - **Discord** 💬: Configure alerts to be sent to a specific Discord channel, ideal for community engagement and quick access.
 
-We plan to add more platforms such as GOG, Epic Games Store, and Origin 🎮. Additionally, future updates will include support for other popular notification channels like Email 📧 and Slack 💼 to enhance accessibility and user preference compatibility.
+We plan to add more platforms such as GOG and Origin 🎮. Additionally, future updates will include support for other popular notification channels like Email 📧 and Slack 💼 to enhance accessibility and user preference compatibility.
 
 👀 Stay tuned for updates and feel free to contribute to the expansion of our supported platforms and notifiers!
 
